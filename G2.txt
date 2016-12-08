@@ -1,0 +1,86 @@
+#!/bin/bash
+
+#DEV POR RODRIGO CARDOSO
+#AULA PROF DIEGO TUMELERO
+#PROVA G2
+#DATA08-12-16
+#DESENV DE REDES DE COMPUTADORES
+
+
+#NESTA PARTE O USUÁRIO DEVE ESCOLHER UMA OPÇÃO PARA EXECUTAR 
+principal() 
+
+{                       # PARTE PRINCIPAL DO PROGRAMA 
+	clear               # COMANDO LIMPA TELA
+	echo " 0 ESCOLHA O ARQUIVO E DIRETORIO PARA SALVAR" 
+    echo " 1 REALIZAR COPIA LOCAL"  
+    echo " 2 FINALIZAR"
+    
+#NESTA PARTE SERA EXECUTADO A OPÇÃO QUE O USUÁRIO ESCOLHER 
+    echo
+    echo -n "ESCOLHA A OPÇÃO ? "
+    read opcao          # LE A VARIAVEL "OPÇÃO", 
+                        
+                        
+
+                        
+    case $opcao in
+        0)              #  OPÇÃO "1" REALIZAR SEGUINTES PASSOS
+            clear
+			defini_arquivos      
+		;;                                
+        1)
+            clear
+			copia_local         
+		;; 
+ 
+     	2)
+            clear
+            exit ;;
+
+        *)              
+            clear
+            echo "Opcao desconhecida."
+            read pause
+            principal   
+        ;;
+    esac
+}
+
+defini_arquivos() {  
+echo "COMPUTADOR DE ORIGEM "
+	read ORIGEM_PC				# COMPUTADOR DE ORIGEM
+	echo "COMPUTADOR DE DESTINO "
+	read DESTINO_PC 				# MAQUINA ONDE VAI SER SALVO OS ARQUIVOS
+	echo "CAMINHO DE ORIGEM "
+	read CAM_ORIGEM					# LOCAL ONDE ESTA O ARQUIVO
+	echo "ARQUIVO"
+	read ARQUIVO					# QUAL ARQUIVO VAI SER COPIADO
+	echo "DESTINO "
+	read CAM_DESTINO				# ONDE SERA COLADO O ARQUIVO NA OUTRA MAQUINA
+	echo  "PORTA SSH"
+	read  PORTA	
+
+    rsync $PARAMETRO "ssh -p $PORTA" $PC_ORIGEM $CAM_ORIGEM/$ARQUIVO $PC_DESTINO:$CAM_DESTINO 
+  
+
+    read pause          
+    principal           
+}
+
+copia_local(){
+echo "DESEJA SALVAR NA MAQUINA LOCAL? "
+	read ORIGEM_PC
+	echo "QUAL O ARQUIVO"
+	read ARQUIVO
+	echo "ONDE ESTA O ARQUIVO "
+	read CAM_ORIGEM
+	echo "CAMINHO PARA SER SALVO O ARQUIVO "
+	read CAM_DESTINO
+	 
+	
+	rsync $PARAMETRO $CAM_ORIGEM/$ARQUIVO localhost:$CAM_DESTINO
+	
+	
+}
+
